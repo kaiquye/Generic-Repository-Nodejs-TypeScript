@@ -1,9 +1,9 @@
 import { codes } from './statusCodes';
 
 export class HttpReturn<T> {
-  private message: 'message not defined by administrator';
   public status = 500;
   private sucess = false;
+  private message: 'message not defined by administrator';
   private object?: T;
 
   private constructor(message?, status?, sucess?, object?) {
@@ -15,11 +15,11 @@ export class HttpReturn<T> {
     Object.freeze(this);
   }
 
-  public static fail<Type>(message: Type, statusCodes: codes): any {
+  public static fail<Type>(message: string, statusCodes: codes): any {
     throw new HttpReturn<Type>(message, statusCodes, false, {});
   }
 
-  public static ok<Type>(message: Type, statusCodes: codes, value?: Type): any {
-    return new HttpReturn<Type>(message, statusCodes, true, value);
+  public static ok<Type>(message: string, status: codes, value?: Type): any {
+    return new HttpReturn<Type>(message, status, true, value);
   }
 }

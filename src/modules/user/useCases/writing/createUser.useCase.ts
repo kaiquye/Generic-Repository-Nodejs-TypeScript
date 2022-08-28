@@ -14,7 +14,6 @@ interface whererOR<T> {
 @Injectable()
 export class CreateUserUseCase implements UseCase<CreateUserDto, Promise<any>> {
   private alreadyError = 'user already registered';
-  private internalError = 'internal error creating a user';
 
   constructor(private repository: FactoryAbstract) {}
   async execute(request: CreateUserDto): Promise<any> {
@@ -23,7 +22,7 @@ export class CreateUserUseCase implements UseCase<CreateUserDto, Promise<any>> {
     });
 
     if (isAlready)
-      return HttpReturn.fail('', codes.ALREADY_REPORTED).CONFLICT();
+      return HttpReturn.fail(this.alreadyError, codes.ALREADY_REPORTED);
 
     const saltRounds = 10;
     const passwordhash = bcrypt.hashSync(request.password, saltRounds);
@@ -31,7 +30,7 @@ export class CreateUserUseCase implements UseCase<CreateUserDto, Promise<any>> {
 
     const userInfos: IUSER = { ...request, passwordhash };
 
-    const created = await this.repository._USER._create(userInfos);
-    return HttpReturn.ok('created user', codes.CREATED).CREATED;
+    const created = await this.repository._USER._create<IUSER>(userInfos);
+    return HttpReturn.ok<IUSER | void>('created', codes.NO_CONTENT, created);
   }
 }
