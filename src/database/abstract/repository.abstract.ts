@@ -19,8 +19,10 @@ export abstract class RepositoryAbstract<T> implements IRepository<T> {
     return Promise.resolve(undefined);
   }
 
-  _exists<Query = Partial<T>>(data: Query): Promise<boolean | Query> {
-    return Promise.resolve(undefined);
+  _exists<Query = Partial<T>>(where: Query): Promise<boolean | Query> {
+    return this.ORM[this.table].findFirst({
+      where,
+    });
   }
 
   _findAll(): Promise<any> {

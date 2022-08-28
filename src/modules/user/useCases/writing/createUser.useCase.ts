@@ -1,13 +1,37 @@
+import * as bcrypt from 'bcrypt';
 import UseCase from '../useCase.interface';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../../dto/create-user.dto';
 import { FactoryAbstract } from '../../../../database/abstract/factory.abstract';
+import { IUSER } from '../../entities/user.entity';
+import { HttpReturn } from '../../../../common/error/error';
+import { codes } from '../../../../common/error/statusCodes';
+
+interface whererOR<T> {
+  OR: Partial<T>[];
+}
 
 @Injectable()
 export class CreateUserUseCase implements UseCase<CreateUserDto, Promise<any>> {
-  constructor(private repositoriesFactory: FactoryAbstract) {}
+  private alreadyError = 'user already registered';
+  private internalError = 'internal error creating a user';
+
+  constructor(private repository: FactoryAbstract) {}
   async execute(request: CreateUserDto): Promise<any> {
-    await this.repositoriesFactory._USER._create(request);
-    return null;
+    const isAlready = await this.repository._USER._exists<whererOR<IUSER>>({
+      OR: [{ email: request.email }, { first_name: request.first_name }],
+    });
+
+    if (isAlready)
+      return HttpReturn.fail('', codes.ALREADY_REPORTED).CONFLICT();
+
+    const saltRounds = 10;
+    const passwordhash = bcrypt.hashSync(request.password, saltRounds);
+    delete request.password;
+
+    const userInfos: IUSER = { ...request, passwordhash };
+
+    const created = await this.repository._USER._create(userInfos);
+    return HttpReturn.ok('created user', codes.CREATED).CREATED;
   }
 }

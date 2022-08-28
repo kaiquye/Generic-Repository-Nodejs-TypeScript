@@ -6,7 +6,7 @@
 interface Reader<T> {
   _findAll(): Promise<T[] | any>;
   _findById<Query = number>(id: Query): Promise<T | void>;
-  _exists<Query = Partial<T>>(data: Query): Promise<boolean | Query>;
+  _exists<Query = Partial<T>>(where: Query): Promise<boolean | Query>;
 }
 
 interface Writer<T> {
