@@ -1,25 +1,16 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseFilters,
-} from '@nestjs/common';
+import { Controller, Post, Body, UseFilters } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { HttpExceptionFilter } from '../../common/error/HttpExceptionFilter';
+import { CreateUserUseCase } from './useCases/writing/createUser.useCase';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly createUser: CreateUserUseCase) {}
 
   @Post()
   @UseFilters(new HttpExceptionFilter())
   tested(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+    return this.createUser.execute(createUserDto);
   }
 
   // @Get()

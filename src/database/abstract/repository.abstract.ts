@@ -12,7 +12,7 @@ export abstract class RepositoryAbstract<T> implements IRepository<T> {
   }
 
   _create<Query = T>(data: Query): Promise<void | Query> {
-    return Promise.resolve(undefined);
+    return this.ORM[this.table].create({ data });
   }
 
   _delete<Query = number>(id: Query): Promise<boolean | void | Query> {
