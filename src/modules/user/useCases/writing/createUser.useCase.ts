@@ -26,7 +26,7 @@ export class CreateUserUseCase
     const isAlready = await this.repository._USER._exists<whererOR<IUSER>>({
       OR: [{ email: request.email }, { first_name: request.first_name }],
     });
-    return 22;
+
     if (isAlready)
       return HttpReturn.fail(this.alreadyError, codes.ALREADY_REPORTED);
 
