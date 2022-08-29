@@ -8,9 +8,10 @@ import { FactoryAbstract } from '../../database/abstract/factory.abstract';
 import { RepositoryFactory } from '../../database/factory/repository.factory';
 import { DatabaseModule } from '../../database/database.module';
 import { FindAllUserUseCase } from './useCases/reading/findAllUser.useCase';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [forwardRef(() => DatabaseModule)],
+  imports: [forwardRef(() => DatabaseModule), forwardRef(() => AuthModule)],
   exports: [UserRepository],
   controllers: [UserController],
   providers: [

@@ -14,6 +14,8 @@ import { RepositoryFactory } from '../../database/factory/repository.factory';
 import { userRepositoryAdapter } from '../user/repository/adapter/userRepository.adapter';
 import { UserRepository } from '../user/repository/userRepository';
 import { PrismaService } from '../../database/connection/prisma';
+import { JwtAuthGuard } from './guards/jwt.guards';
+import { LocalAuthGuard } from './guards/local.guards';
 
 @Module({
   imports: [
@@ -21,7 +23,7 @@ import { PrismaService } from '../../database/connection/prisma';
     forwardRef(() => UserModule),
     PassportModule,
     JwtModule.register({
-      privateKey: 'secret',
+      privateKey: 'SECRET',
       signOptions: { expiresIn: '820s' },
     }),
   ],
@@ -32,6 +34,8 @@ import { PrismaService } from '../../database/connection/prisma';
     JwtStrategy,
     LocalStrategy,
     PrismaService,
+    JwtAuthGuard,
+    LocalAuthGuard,
     {
       provide: FactoryAbstract,
       useClass: RepositoryFactory,

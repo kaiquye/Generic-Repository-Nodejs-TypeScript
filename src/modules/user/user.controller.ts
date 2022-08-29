@@ -11,6 +11,8 @@ import { HttpExceptionFilter } from '../../common/error/HttpExceptionFilter';
 import { CreateUserUseCase } from './useCases/writing/createUser.useCase';
 import { AuthGuard } from '@nestjs/passport';
 import { FindAllUserUseCase } from './useCases/reading/findAllUser.useCase';
+import { JwtAuthGuard } from '../auth/guards/jwt.guards';
+import { LocalAuthGuard } from '../auth/guards/local.guards';
 
 @Controller('user')
 export class UserController {
@@ -20,13 +22,12 @@ export class UserController {
   ) {}
 
   @Post()
-  @UseFilters(new HttpExceptionFilter())
+  @UseFilters(LocalAuthGuard)
   create(@Body() createUserDto: CreateUserDto) {
     return this.createUser.execute(createUserDto);
   }
-
+  @UseGuards(JwtAuthGuard)
   @Get()
-  // @UseGuards(AuthGuard('jwt'))
   findAll() {
     return this.findAllUser.execute();
   }
