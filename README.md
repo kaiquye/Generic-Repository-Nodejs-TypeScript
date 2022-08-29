@@ -1,5 +1,6 @@
 <h2 align="center">Creating a generic repository with nestjs and prism</h3>
 <h1 align="center">:hammer:</h3>
+
 this project was developed based on my knowledge in architecture and good programming practices.
 
 **Utility:**
@@ -11,27 +12,30 @@ repositories "on top of others", in favor of**DRY**.
   only.
 
 example :
--  ```javascript
+```javascript
     _create<Query = T>(data: Query): Promise<void | Query> {
         return this.ORM[this.table].create({ data });
     }
-    ```
+```
 
 
 **ORM:** With this pattern we can easily change ORM without having to rewrite all our repositories.
 application.
 
 exemplo:
--  ```javascript
+
+```javascript
     constructor(table: TablesEnum, ORM: PrismaService) {
         this.table = table;
         this.ORM = ORM;
     }
-    ```
+```
+
 <h3 align="center">Abstract repository</h3>
 
 **AbstractRepositorty:** We abstract the common methods into a single file and then extend our abstract class
 repository.
+
 exemplo: 
 
 
