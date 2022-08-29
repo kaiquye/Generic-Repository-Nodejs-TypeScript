@@ -15,8 +15,8 @@ export abstract class RepositoryAbstract<T> implements IRepository<T> {
     return this.ORM[this.table].create({ data });
   }
 
-  _delete<Query = number>(id: Query): Promise<boolean | void | Query> {
-    return Promise.resolve(undefined);
+  _delete<Query = number>(where: Query): Promise<boolean | void | Query> {
+    return this.ORM[this.table].delete({ where });
   }
 
   _exists<Query = Partial<T>>(where: Query): Promise<boolean | Query> {

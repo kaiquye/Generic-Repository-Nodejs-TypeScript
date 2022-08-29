@@ -11,7 +11,7 @@ interface Reader<T> {
 
 interface Writer<T> {
   _create<Query = T>(data: Query): Promise<Query | void>;
-  _delete<Query = number>(id: Query): Promise<boolean | void | Query>;
+  _delete<Query = number>(where: Query): Promise<boolean | void | Query>;
 }
 
 export type IRepository<T> = Reader<T> & Writer<T>;
