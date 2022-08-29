@@ -1,4 +1,4 @@
-import UseCase from './useCase.interface';
+import UseCase from './adapter/useCase.interface';
 import { JwtService } from '@nestjs/jwt';
 import { Injectable, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';

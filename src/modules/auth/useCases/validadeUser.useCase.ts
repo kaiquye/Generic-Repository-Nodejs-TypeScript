@@ -1,4 +1,4 @@
-import UseCase from './useCase.interface';
+import UseCase from './adapter/useCase.interface';
 import { FactoryAbstract } from '../../../database/abstract/factory.abstract';
 import { IUSER } from '../../user/entities/user.entity';
 import { CreateUserDto } from '../../user/dto/create-user.dto';
