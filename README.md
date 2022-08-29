@@ -1,73 +1,141 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+## Generic Repository with nestjs and primsa 
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## About 
+**Utilidade:**
+A ideia desse padrão é não repetir logicas varias vezes ou criar 
+repositorios "em cima dos outros", em prol do **DRY**. 
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+* **DRY** : Don't repeat yourself (em português: Não repita a si mesmo) é um 
+conceito de programação o qual propõe que cada porção de conhecimento em um sistema deve possuir uma representação
+única.
 
-## Description
+exemplo :
+-  ```javascript
+    _create<Query = T>(data: Query): Promise<void | Query> {
+        return this.ORM[this.table].create({ data });
+    }
+    ```
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
-## Installation
+**ORM:** Com esse padrão podemos trocar facilmente de ORM sem precisa reescrever todos os repositorios da nossa 
+aplicação.
 
-```bash
-$ npm install
+exemplo:
+-  ```javascript
+    constructor(table: TablesEnum, ORM: PrismaService) {
+        this.table = table;
+        this.ORM = ORM;
+    }
+    ```
+
+**AbstractRepositorty:** Abstraimos os metodos comum em um único arquivo é depois extendemos nosso repositorio da class abstract.
+
+exemplo: 
+
+<h3 align="center">Repositorio abstrato</h3>
+```javascript
+export abstract class RepositoryAbstract<T> implements IRepository<T> {
+  private readonly table: TablesEnum;
+  private readonly ORM: PrismaService;
+
+  constructor(table: TablesEnum, ORM: PrismaService) {
+    this.table = table;
+    this.ORM = ORM;
+  }
+
+  _create<Query = T>(data: Query): Promise<void | Query> {
+    return this.ORM[this.table].create({ data });
+  }
+
+  _delete<Query = number>(where: Query): Promise<boolean | void | Query> {
+    return this.ORM[this.table].delete({ where });
+  }
+
+  _exists<Query = Partial<T>>(where: Query): Promise<boolean | Query> {
+    return this.ORM[this.table].findFirst({ where });
+  }
+
+  _findAll<Query>(select?: Query): Promise<any> {
+    if (!select) {
+      return this.ORM[this.table].findMany();
+    }
+    return this.ORM[this.table].findMany({
+      select,
+    });
+  }
+
+  _findById<Query = number>(id: Query): Promise<void | T> {
+    return this.ORM[this.table].findUnique({
+      where: {
+        id: id,
+      },
+    });
+  }
+}
+```
+<h4 align="center">Repositorio concreto</h4>
+
+Nosso adaptador.
+```javascript
+export abstract class userRepositoryAdapter extends RepositoryAbstract<IUSER> {}
 ```
 
-## Running the app
+Nosso repositorio concreto que extende do nosso adaptador.
+```javascript
+import { userRepositoryAdapter } from './adapter/userRepository.adapter';
+import { TablesEnum } from '../../../genericDatabase/tables/tables.enum';
+import { PrismaService } from '../../../genericDatabase/connection/prisma';
+import { Injectable } from '@nestjs/common';
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+@Injectable()
+export class UserRepository extends userRepositoryAdapter {
+  constructor(private prisma: PrismaService) {
+    super(TablesEnum.USER, prisma);
+  }
+    ...metodos personalizados da nossa entidade ficariam aqui.
+}
 ```
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
 
-# e2e tests
-$ npm run test:e2e
 
-# test coverage
-$ npm run test:cov
+<h4 align="center">Fabrica de repositorios</h4>
+
+Essa é nossa **abstract factory**. Todos os repositorios são iniciados aqui com a ajuda do metodo **OnApplicationBootstrap**.
+
+```javascript
+import { FactoryAbstract } from '../abstract/factory.abstract';
+import { userRepositoryAdapter } from '../../modules/user/repository/adapter/userRepository.adapter';
+import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
+
+/**
+ * this class is responsible for creating a factory of repositories and starting them when the
+ * application starts.
+ * Here I install all the repositories of my project, centralizing them all
+ *
+ * @example
+ * constructor(private repository: FactoryAbstract) {}
+ */
+
+@Injectable()
+export class RepositoryFactory
+  implements FactoryAbstract, OnApplicationBootstrap
+{
+  _USER: userRepositoryAdapter;
+  _ADDRESS: addressRepositoryAdapter;
+  _STATE: stateRepositoryAdapter
+
+  constructor(
+      private userRepositoryConcrete: userRepositoryAdapter,
+      private addressRepositoryAdapter: addressRepositoryAdapter,
+      private stateRepositoryAdapter: stateRepositoryAdapter
+) {}
+
+  onApplicationBootstrap(): any {
+    this._USER = this.userRepositoryConcrete;
+    this._ADDRESS: this.addressRepositoryAdapter;
+    this._STATE: this.stateRepositoryAdapter
+  }
+}
+
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
