@@ -1,5 +1,5 @@
 import UseCase from '../useCase.interface';
-import { FactoryAbstract } from '../../../../generiDatabase/abstract/factory.abstract';
+import { FactoryAbstract } from '../../../../genericDatabase/abstract/factory.abstract';
 import { IUSER } from '../../entities/user.entity';
 import { Injectable } from '@nestjs/common';
 

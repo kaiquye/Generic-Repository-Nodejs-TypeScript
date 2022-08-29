@@ -1,4 +1,4 @@
-import { FactoryAbstract } from '../../../generiDatabase/abstract/factory.abstract';
+import { FactoryAbstract } from '../../../genericDatabase/abstract/factory.abstract';
 import { IUSER } from '../../user/entities/user.entity';
 import { compareSync } from 'bcrypt';
 import { Injectable } from '@nestjs/common';

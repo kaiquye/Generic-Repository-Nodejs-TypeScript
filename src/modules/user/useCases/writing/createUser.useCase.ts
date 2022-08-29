@@ -2,7 +2,7 @@ import * as bcrypt from 'bcrypt';
 import UseCase from '../useCase.interface';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../../dto/create-user.dto';
-import { FactoryAbstract } from '../../../../generiDatabase/abstract/factory.abstract';
+import { FactoryAbstract } from '../../../../genericDatabase/abstract/factory.abstract';
 import { IUSER } from '../../entities/user.entity';
 import { HttpReturn } from '../../../../common/error/error';
 import { codes } from '../../../../common/error/statusCodes';

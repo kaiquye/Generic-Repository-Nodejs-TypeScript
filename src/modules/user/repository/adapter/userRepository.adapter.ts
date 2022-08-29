@@ -1,4 +1,4 @@
-import { RepositoryAbstract } from '../../../../generiDatabase/abstract/repository.abstract';
+import { RepositoryAbstract } from '../../../../genericDatabase/abstract/repository.abstract';
 import { IUSER } from '../../entities/user.entity';
 
 /**

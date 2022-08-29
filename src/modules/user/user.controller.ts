@@ -16,6 +16,7 @@ import { DeleteUserUseCase } from './useCases/writing/deleteUser.useCase';
 import { Roles } from '../auth/roles/Roles';
 import { Role } from '../auth/roles/Role';
 import { HttpExceptionFilter } from '../../common/error/HttpExceptionFilter';
+import { FindByIdUseCase } from './useCases/reading/findById.useCase';
 
 @Controller('user')
 @UseFilters(new HttpExceptionFilter())
@@ -24,6 +25,7 @@ export class UserController {
     private readonly createUser: CreateUserUseCase,
     private readonly findAllUser: FindAllUserUseCase,
     private readonly deleteUser: DeleteUserUseCase,
+    private readonly findById: FindByIdUseCase,
   ) {}
 
   @Post()
@@ -36,16 +38,10 @@ export class UserController {
     return this.findAllUser.execute();
   }
   //
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.userService.findOne(+id);
-  // }
-  //
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.userService.update(+id, updateUserDto);
-  // }
-  //
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.findById.execute(+id);
+  }
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {

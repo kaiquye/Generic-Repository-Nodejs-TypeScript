@@ -1,6 +1,6 @@
 import { userRepositoryAdapter } from './adapter/userRepository.adapter';
-import { TablesEnum } from '../../../generiDatabase/tables/tables.enum';
-import { PrismaService } from '../../../generiDatabase/connection/prisma';
+import { TablesEnum } from '../../../genericDatabase/tables/tables.enum';
+import { PrismaService } from '../../../genericDatabase/connection/prisma';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
