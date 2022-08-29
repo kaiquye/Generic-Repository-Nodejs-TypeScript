@@ -16,6 +16,7 @@ import { UserRepository } from '../user/repository/userRepository';
 import { PrismaService } from '../../database/connection/prisma';
 import { JwtAuthGuard } from './guards/jwt.guards';
 import { LocalAuthGuard } from './guards/local.guards';
+// import { RolesGuard } from './guards/roles.guards';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { LocalAuthGuard } from './guards/local.guards';
     PrismaService,
     JwtAuthGuard,
     LocalAuthGuard,
+    // RolesGuard,
     {
       provide: FactoryAbstract,
       useClass: RepositoryFactory,

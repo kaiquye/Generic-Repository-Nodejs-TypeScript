@@ -9,6 +9,7 @@ import { RepositoryFactory } from '../../database/factory/repository.factory';
 import { DatabaseModule } from '../../database/database.module';
 import { FindAllUserUseCase } from './useCases/reading/findAllUser.useCase';
 import { AuthModule } from '../auth/auth.module';
+import { DeleteUserUseCase } from './useCases/writing/deleteUser.useCase';
 
 @Module({
   imports: [forwardRef(() => DatabaseModule), forwardRef(() => AuthModule)],
@@ -19,6 +20,7 @@ import { AuthModule } from '../auth/auth.module';
     PrismaService,
     UserRepository,
     FindAllUserUseCase,
+    DeleteUserUseCase,
     {
       provide: FactoryAbstract,
       useClass: RepositoryFactory,
