@@ -13,8 +13,8 @@ import { CreateUserUseCase } from './useCases/writing/createUser.useCase';
 import { FindAllUserUseCase } from './useCases/reading/findAllUser.useCase';
 import { JwtAuthGuard } from '../auth/guards/jwt.guards';
 import { DeleteUserUseCase } from './useCases/writing/deleteUser.useCase';
-import { Roles } from '../auth/Roles/Roles';
-import { Role } from '../auth/Roles/Role';
+import { Roles } from '../auth/roles/Roles';
+import { Role } from '../auth/roles/Role';
 import { HttpExceptionFilter } from '../../common/error/HttpExceptionFilter';
 
 @Controller('user')
