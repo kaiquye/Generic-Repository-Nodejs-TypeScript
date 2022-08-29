@@ -1,9 +1,5 @@
-import UseCase from './adapter/useCase.interface';
 import { FactoryAbstract } from '../../../database/abstract/factory.abstract';
 import { IUSER } from '../../user/entities/user.entity';
-import { CreateUserDto } from '../../user/dto/create-user.dto';
-import { HttpReturn } from '../../../common/error/error';
-import { codes } from '../../../common/error/statusCodes';
 import { compareSync } from 'bcrypt';
 import { Injectable } from '@nestjs/common';
 

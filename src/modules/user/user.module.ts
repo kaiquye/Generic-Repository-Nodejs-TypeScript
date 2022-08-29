@@ -7,6 +7,7 @@ import { PrismaService } from '../../database/connection/prisma';
 import { FactoryAbstract } from '../../database/abstract/factory.abstract';
 import { RepositoryFactory } from '../../database/factory/repository.factory';
 import { DatabaseModule } from '../../database/database.module';
+import { FindAllUserUseCase } from './useCases/reading/findAllUser.useCase';
 
 @Module({
   imports: [forwardRef(() => DatabaseModule)],
@@ -16,6 +17,7 @@ import { DatabaseModule } from '../../database/database.module';
     CreateUserUseCase,
     PrismaService,
     UserRepository,
+    FindAllUserUseCase,
     {
       provide: FactoryAbstract,
       useClass: RepositoryFactory,

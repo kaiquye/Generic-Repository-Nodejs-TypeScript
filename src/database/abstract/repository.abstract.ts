@@ -41,8 +41,13 @@ export abstract class RepositoryAbstract<T> implements IRepository<T> {
     return this.ORM[this.table].findFirst({ where });
   }
 
-  _findAll(): Promise<any> {
-    return this.ORM[this.table].findMany();
+  _findAll<Query>(select?: Query): Promise<any> {
+    if (!select) {
+      return this.ORM[this.table].findMany();
+    }
+    return this.ORM[this.table].findMany({
+      select,
+    });
   }
 
   _findById<Query = number>(id: Query): Promise<void | T> {

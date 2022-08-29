@@ -10,10 +10,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { HttpExceptionFilter } from '../../common/error/HttpExceptionFilter';
 import { CreateUserUseCase } from './useCases/writing/createUser.useCase';
 import { AuthGuard } from '@nestjs/passport';
+import { FindAllUserUseCase } from './useCases/reading/findAllUser.useCase';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly createUser: CreateUserUseCase) {}
+  constructor(
+    private readonly createUser: CreateUserUseCase,
+    private readonly findAllUser: FindAllUserUseCase,
+  ) {}
 
   @Post()
   @UseFilters(new HttpExceptionFilter())
@@ -22,9 +26,9 @@ export class UserController {
   }
 
   @Get()
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   findAll() {
-    console.log('tested');
+    return this.findAllUser.execute();
   }
   //
   // @Get(':id')
