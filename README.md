@@ -104,6 +104,7 @@ Our concrete repository that extends from our adapter.
         super(TablesEnum.USER, prisma);
       }
         ...metodos personalizados da nossa entidade ficariam aqui.
+        ...our entity's custom methods would be here.
     }
 ```
 
@@ -150,3 +151,14 @@ This is our **abstract factory**. All repositories are started here with the hel
     }
 
 ```
+
+<h3 align="center">Concrete instance of our repository</h3>
+
+Using our repository in a concrete class to persist the data.
+```javascript
+  constructor(private repository: FactoryAbstract) {}
+  async execute(request: CreateUserDto): Promise<any> {
+    const isAlready = await this.repository._USER._exists<whererOR<IUSER>>({
+      OR: [{ email: request.email }, { first_name: request.first_name }],
+    });
+``
