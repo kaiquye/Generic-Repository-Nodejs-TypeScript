@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../../dto/create-user.dto';
 import { FactoryAbstract } from '../../../../genericDatabase/abstract/factory.abstract';
 import { IUSER } from '../../entities/user.entity';
-import { HttpReturn } from '../../../../common/HttpModelResponse/HttpReturn';
+import { HttpReturn } from '../../../../common/httpResponseTemplate/HttpReturn';
 import { codes } from '../../../../common/enum/statusCodes';
 
 /**

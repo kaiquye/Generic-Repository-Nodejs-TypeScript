@@ -15,7 +15,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt.guards';
 import { DeleteUserUseCase } from './useCases/writing/deleteUser.useCase';
 import { Roles } from '../auth/roles/Roles';
 import { Role } from '../auth/roles/Role';
-import { HttpExceptionFilter } from '../../common/HttpModelResponse/HttpExceptionFilter';
+import { HttpExceptionFilter } from '../../common/httpResponseTemplate/HttpExceptionFilter';
 import { FindByIdUseCase } from './useCases/reading/findById.useCase';
 
 @Controller('user')
