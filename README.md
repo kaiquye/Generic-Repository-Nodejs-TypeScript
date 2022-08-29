@@ -2,9 +2,9 @@
 <h1 align="center">:hammer:</h3>
 
 
-<h1 align="center">This project follows some concepts of OOP, (object oriented programming). 
+<h3 align="center">This project follows some concepts of OOP, (object oriented programming). 
 This project was developed based on my knowledge in architecture and good programming practices.
-</h1>
+</h3>
 
 **Utility:**
 The idea of this pattern is not to repeat logics several times or create
