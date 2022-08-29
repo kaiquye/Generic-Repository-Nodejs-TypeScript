@@ -1,6 +1,6 @@
-## Generic Repository with nestjs and primsa 
-
-## About 
+## Generic Repository with nestjs and primsa  :hammer:
+esse projeto foi desenvolvido com base nos meus conhecimentos em arquitetura e boas praticas em programacao.
+## About :memo: 
 **Utility:**
 The idea of this pattern is not to repeat logics several times or create
 repositories "on top of others", in favor of**DRY**. 
