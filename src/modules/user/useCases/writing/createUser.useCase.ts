@@ -5,7 +5,7 @@ import { CreateUserDto } from '../../dto/create-user.dto';
 import { FactoryAbstract } from '../../../../genericDatabase/abstract/factory.abstract';
 import { IUSER } from '../../entities/user.entity';
 import { HttpReturn } from '../../../../common/error/error';
-import { codes } from '../../../../common/error/statusCodes';
+import { codes } from '../../../../common/enum/statusCodes';
 
 /**
  * @interface create a custom typing for queries

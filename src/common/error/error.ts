@@ -1,4 +1,4 @@
-import { codes } from './statusCodes';
+import { codes } from '../enum/statusCodes';
 
 export class HttpReturn<T> {
   public status = 500;
