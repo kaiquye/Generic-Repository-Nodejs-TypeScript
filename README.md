@@ -1,15 +1,15 @@
 ## Generic Repository with nestjs and primsa 
 
 ## About 
-**Utilidade:**
-A ideia desse padrão é não repetir logicas varias vezes ou criar 
-repositorios "em cima dos outros", em prol do **DRY**. 
+**Utility:**
+The idea of this pattern is not to repeat logics several times or create
+repositories "on top of others", in favor of**DRY**. 
 
-* **DRY** : Don't repeat yourself (em português: Não repita a si mesmo) é um 
-conceito de programação o qual propõe que cada porção de conhecimento em um sistema deve possuir uma representação
-única.
+* **DRY** : it is a
+  programming concept which proposes that each piece of knowledge in a system must have a representation
+  only.
 
-exemplo :
+example :
 -  ```javascript
     _create<Query = T>(data: Query): Promise<void | Query> {
         return this.ORM[this.table].create({ data });
@@ -17,8 +17,8 @@ exemplo :
     ```
 
 
-**ORM:** Com esse padrão podemos trocar facilmente de ORM sem precisa reescrever todos os repositorios da nossa 
-aplicação.
+**ORM:** With this pattern we can easily change ORM without having to rewrite all our repositories.
+application.
 
 exemplo:
 -  ```javascript
@@ -27,10 +27,10 @@ exemplo:
         this.ORM = ORM;
     }
     ```
-<h3 align="center">Repositorio abstrato</h3>
+<h3 align="center">Abstract repository</h3>
 
-**AbstractRepositorty:** Abstraimos os metodos comum em um único arquivo é depois extendemos nosso repositorio da class abstract.
-
+**AbstractRepositorty:** We abstract the common methods into a single file and then extend our abstract class
+repository.
 exemplo: 
 
 
@@ -74,15 +74,15 @@ exemplo:
       }
     }
 ```
-<h4 align="center">Repositorio concreto</h4>
+<h4 align="center">Concrete repository</h4>
 
-Nosso adaptador.
+Our adapter.
 
 ```javascript
     export abstract class userRepositoryAdapter extends RepositoryAbstract<IUSER> {}
 ```
 
-Nosso repositorio concreto que extende do nosso adaptador.
+Our concrete repository that extends from our adapter.
 
 ```javascript
     import { userRepositoryAdapter } from './adapter/userRepository.adapter';
@@ -102,9 +102,9 @@ Nosso repositorio concreto que extende do nosso adaptador.
 
 
 
-<h4 align="center">Fabrica de repositorios</h4>
+<h4 align="center">Repositories factory</h4>
 
-Essa é nossa **abstract factory**. Todos os repositorios são iniciados aqui com a ajuda do metodo **OnApplicationBootstrap**.
+This is our **abstract factory**. All repositories are started here with the help of the **OnApplicationBootstrap** method.
 
 ```javascript
     import { FactoryAbstract } from '../abstract/factory.abstract';
