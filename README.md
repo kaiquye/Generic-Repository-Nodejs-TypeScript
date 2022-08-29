@@ -27,12 +27,13 @@ exemplo:
         this.ORM = ORM;
     }
     ```
+<h3 align="center">Repositorio abstrato</h3>
 
 **AbstractRepositorty:** Abstraimos os metodos comum em um único arquivo é depois extendemos nosso repositorio da class abstract.
 
 exemplo: 
 
-<h3 align="center">Repositorio abstrato</h3>
+
 ```javascript
     export abstract class RepositoryAbstract<T> implements IRepository<T> {
       private readonly table: TablesEnum;
@@ -76,11 +77,13 @@ exemplo:
 <h4 align="center">Repositorio concreto</h4>
 
 Nosso adaptador.
+
 ```javascript
     export abstract class userRepositoryAdapter extends RepositoryAbstract<IUSER> {}
 ```
 
 Nosso repositorio concreto que extende do nosso adaptador.
+
 ```javascript
     import { userRepositoryAdapter } from './adapter/userRepository.adapter';
     import { TablesEnum } from '../../../genericDatabase/tables/tables.enum';
