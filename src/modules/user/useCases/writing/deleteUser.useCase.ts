@@ -1,5 +1,5 @@
 import UseCase from '../useCase.interface';
-import { FactoryAbstract } from '../../../../database/abstract/factory.abstract';
+import { FactoryAbstract } from '../../../../generiDatabase/abstract/factory.abstract';
 import { IUSER } from '../../entities/user.entity';
 import { HttpReturn } from '../../../../common/error/error';
 import { codes } from '../../../../common/error/statusCodes';
