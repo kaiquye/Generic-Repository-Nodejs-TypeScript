@@ -1,11 +1,14 @@
 <h2 align="center">Creating a generic repository with nestjs and prism</h3>
 <h1 align="center">:hammer:</h3>
 
-this project was developed based on my knowledge in architecture and good programming practices.
+
+<h1 align="center">This project follows some concepts of OOP, (object oriented programming). 
+This project was developed based on my knowledge in architecture and good programming practices.
+</h1>
 
 **Utility:**
 The idea of this pattern is not to repeat logics several times or create
-repositories "on top of others", in favor of**DRY**. 
+repositories "on top of others", in favor of **DRY**. 
 
 * **DRY** : it is a
   programming concept which proposes that each piece of knowledge in a system must have a representation
