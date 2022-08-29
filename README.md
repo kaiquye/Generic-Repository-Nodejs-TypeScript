@@ -1,7 +1,6 @@
-<h3 align="center">Generic Repository with nestjs and primsa </h3>
+<h2 align="center">Creating a generic repository with nestjs and prism</h3>
 <h1 align="center">:hammer:</h3>
 this project was developed based on my knowledge in architecture and good programming practices.
-## About :memo: 
 
 **Utility:**
 The idea of this pattern is not to repeat logics several times or create
