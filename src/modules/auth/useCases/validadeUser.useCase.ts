@@ -19,13 +19,15 @@ export class ValidadeUserUseCase {
   constructor(private repository: FactoryAbstract) {}
   async execute(email: string, password: string): Promise<any> {
     try {
-      console.log(email);
-      const user = await this.repository._USER._exists({
-        email: 'kaiqu2saasa2e@gsmail.com',
-      });
-      console.log(user);
-      if (!user) return null;
-      return user;
+      const infosUser = (await this.repository._USER._exists({
+        email: email,
+      })) as IUSER;
+
+      const match = compareSync(password, infosUser.passwordhash);
+      delete infosUser.passwordhash;
+
+      if (!match) return null;
+      return infosUser;
     } catch (e) {
       return null;
     }

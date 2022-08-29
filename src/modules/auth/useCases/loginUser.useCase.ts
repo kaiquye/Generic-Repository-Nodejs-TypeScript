@@ -11,7 +11,7 @@ export class LoginUserUseCase implements UseCase<any, any> {
     return {
       token: this.jwtServices.sign({
         email: request.email,
-        fistName: request.fistName,
+        first_name: request.first_name,
       }),
     };
   }
