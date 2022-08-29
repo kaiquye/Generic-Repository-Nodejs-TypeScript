@@ -2,6 +2,24 @@ import { IRepository } from '../interface/repository.interface';
 import { TablesEnum } from '../tables/tables.enum';
 import { PrismaService } from '../connection/prisma';
 
+/**
+ *  this is an abstract repository that new repositories can implement.
+ *
+ *  with adapter
+ *  @example @Injectable()
+ *  export class UserRepository extends userRepositoryAdapter {
+ *   constructor(private prisma: PrismaService) {
+ *     super(nameTable, instaceorm);
+ *   }
+ * }
+ *  without adapter
+ * @example @Injectable()
+ * export class UserRepository extends RepositoryAbstract<Type>  {
+ *   constructor(private prisma: PrismaService) {
+ *     super(nameTable, instaceorm);
+ *   }
+ * }
+ **/
 export abstract class RepositoryAbstract<T> implements IRepository<T> {
   private readonly table: TablesEnum;
   private readonly ORM: PrismaService;

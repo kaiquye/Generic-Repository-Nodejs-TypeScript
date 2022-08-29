@@ -7,6 +7,9 @@ import { IUSER } from '../../entities/user.entity';
 import { HttpReturn } from '../../../../common/error/error';
 import { codes } from '../../../../common/error/statusCodes';
 
+/**
+ * @interface create a custom typing for queries
+ **/
 interface whererOR<T> {
   OR: Partial<T>[];
 }
