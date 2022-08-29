@@ -22,19 +22,19 @@ export class CreateUserUseCase
 
   constructor(private repository: FactoryAbstract) {}
   async execute(request: CreateUserDto): Promise<any> {
+    console.log('1');
     const isAlready = await this.repository._USER._exists<whererOR<IUSER>>({
       OR: [{ email: request.email }, { first_name: request.first_name }],
     });
-
+    return 22;
     if (isAlready)
       return HttpReturn.fail(this.alreadyError, codes.ALREADY_REPORTED);
 
     const saltRounds = 10;
     const passwordhash = bcrypt.hashSync(request.password, saltRounds);
     delete request.password;
-
+    return 24;
     const userInfos: IUSER = { ...request, passwordhash };
-
     const created = await this.repository._USER._create<IUSER>(userInfos);
 
     return HttpReturn.ok<IUSER | void>('created', codes.CREATED, created);

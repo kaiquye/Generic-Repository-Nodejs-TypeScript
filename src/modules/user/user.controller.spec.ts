@@ -5,7 +5,7 @@ import { FindAllUserUseCase } from './useCases/reading/findAllUser.useCase';
 import { DeleteUserUseCase } from './useCases/writing/deleteUser.useCase';
 import { FindByIdUseCase } from './useCases/reading/findById.useCase';
 import { CreateUserDto } from './dto/create-user.dto';
-import { __USER_MOCK__ } from '../../common/mocks/mock';
+import { __ARRAY_USERS_MOCK__, __USER_MOCK__ } from '../../common/mocks/mock';
 
 describe('UserController', () => {
   let useController: UserController;
@@ -21,25 +21,25 @@ describe('UserController', () => {
         {
           provide: CreateUserUseCase,
           useValue: {
-            execute: jest.fn().mockResolvedValue(''),
+            execute: jest.fn().mockResolvedValue(__USER_MOCK__),
           },
         },
         {
           provide: FindAllUserUseCase,
           useValue: {
-            execute: jest.fn().mockResolvedValue(''),
+            execute: jest.fn().mockResolvedValue(__ARRAY_USERS_MOCK__),
           },
         },
         {
           provide: DeleteUserUseCase,
           useValue: {
-            execute: jest.fn().mockResolvedValue(''),
+            execute: jest.fn().mockResolvedValue(__USER_MOCK__),
           },
         },
         {
           provide: FindByIdUseCase,
           useValue: {
-            execute: jest.fn().mockResolvedValue(''),
+            execute: jest.fn().mockResolvedValue(__USER_MOCK__),
           },
         },
       ],
@@ -66,8 +66,18 @@ describe('UserController', () => {
 
       const result = await useController.create(userDto);
 
-      console.log('----', result, userDto);
-      // expect(result).toEqual(userDto);
+      expect(result).toEqual(userDto);
+      expect(createUser.execute).toHaveReturnedTimes(1);
+    });
+    it('search all users', async () => {
+      const result = await findAllUser.execute();
+
+      expect(result).toEqual(__ARRAY_USERS_MOCK__);
+    });
+    it('deleting a user ', async () => {
+      const result = await deleteUser.execute(__USER_MOCK__);
+
+      expect(result).toEqual(__USER_MOCK__);
     });
   });
 });

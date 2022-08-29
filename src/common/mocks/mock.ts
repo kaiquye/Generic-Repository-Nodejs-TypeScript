@@ -7,3 +7,8 @@ export const __USER_MOCK__: CreateUserDto = {
   email: 'kaique@gmail.com',
   password: '12345',
 };
+
+export const __ARRAY_USERS_MOCK__: CreateUserDto[] = [
+  __USER_MOCK__,
+  __USER_MOCK__,
+];
