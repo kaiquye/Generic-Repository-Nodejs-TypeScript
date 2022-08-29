@@ -3,9 +3,12 @@ import { userRepositoryAdapter } from '../../modules/user/repository/adapter/use
 import { Injectable, OnApplicationBootstrap } from '@nestjs/common';
 
 /**
- * @class RepositoryFactory this class is responsible for creating a factory of repositories and starting them when the
+ * this class is responsible for creating a factory of repositories and starting them when the
  * application starts.
- * @description Here I install all the repositories of my project, centralizing them all
+ * Here I install all the repositories of my project, centralizing them all
+ *
+ * @example
+ * constructor(private repository: FactoryAbstract) {}
  */
 
 @Injectable()

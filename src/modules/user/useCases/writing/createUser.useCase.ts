@@ -15,7 +15,9 @@ interface whererOR<T> {
 }
 
 @Injectable()
-export class CreateUserUseCase implements UseCase<CreateUserDto, Promise<any>> {
+export class CreateUserUseCase
+  implements UseCase<CreateUserDto, HttpReturn<any>>
+{
   private alreadyError = 'user already registered';
 
   constructor(private repository: FactoryAbstract) {}
@@ -34,6 +36,7 @@ export class CreateUserUseCase implements UseCase<CreateUserDto, Promise<any>> {
     const userInfos: IUSER = { ...request, passwordhash };
 
     const created = await this.repository._USER._create<IUSER>(userInfos);
-    return HttpReturn.ok<IUSER | void>('created', codes.NO_CONTENT, created);
+
+    return HttpReturn.ok<IUSER | void>('created', codes.CREATED, created);
   }
 }

@@ -1,7 +1,15 @@
-import { Controller, Post, Body, UseFilters } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseFilters,
+  Get,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { HttpExceptionFilter } from '../../common/error/HttpExceptionFilter';
 import { CreateUserUseCase } from './useCases/writing/createUser.useCase';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('user')
 export class UserController {
@@ -9,14 +17,15 @@ export class UserController {
 
   @Post()
   @UseFilters(new HttpExceptionFilter())
-  tested(@Body() createUserDto: CreateUserDto) {
+  create(@Body() createUserDto: CreateUserDto) {
     return this.createUser.execute(createUserDto);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.userService.findAll();
-  // }
+  @Get()
+  @UseGuards(AuthGuard('jwt'))
+  findAll() {
+    console.log('tested');
+  }
   //
   // @Get(':id')
   // findOne(@Param('id') id: string) {
