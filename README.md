@@ -6,8 +6,6 @@
 This project was developed based on my knowledge in architecture and good programming practices.
 </h3>
 
-![img_2.png](img_2.png)
-
 **Utility:**
 The idea of this pattern is not to repeat logics several times or create
 repositories "on top of others", in favor of **DRY**. 
