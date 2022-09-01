@@ -33,7 +33,7 @@ export class CreateUserUseCase
     const saltRounds = 10;
     const passwordhash = bcrypt.hashSync(request.password, saltRounds);
     delete request.password;
-    return 24;
+
     const userInfos: IUSER = { ...request, passwordhash };
     const created = await this.repository._USER._create<IUSER>(userInfos);
 
